@@ -3,9 +3,9 @@ import 'package:photo_manager/photo_manager.dart';
 import 'package:squarefit/models/media.dart';
 import 'package:squarefit/services/fetch_albums.dart';
 import 'package:squarefit/services/fetch_medias.dart';
+import 'package:squarefit/ui/components/import_button.dart';
 import 'package:squarefit/ui/components/medias_grid_view.dart';
 import 'package:squarefit/ui/screens/setting_drawer.dart';
-import 'package:squarefit/ui/screens/editor_screen.dart';
 
 class PickerScreen extends StatefulWidget {
   final List<Media> selectedMedias;
@@ -94,6 +94,7 @@ class _PickerScreenState extends State<PickerScreen> {
     return Scaffold(
       drawer: SettingDrawer(),
       appBar: AppBar(
+        // dropdown button
         title: DropdownButton<AssetPathEntity>(
           borderRadius: BorderRadius.circular(16.0),
           value: _currentAlbum,
@@ -116,27 +117,18 @@ class _PickerScreenState extends State<PickerScreen> {
             _scrollController.jumpTo(0.0);
           },
         ),
+        // import button
+        actions: [ImportButton(selectedMedias: _selectedMedias)],
       ),
-      body: MediasGridView(
-        medias: _medias,
-        selectedMedias: _selectedMedias,
-        selectMedia: _selectMedia,
-        scrollController: _scrollController,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: MediasGridView(
+          medias: _medias,
+          selectedMedias: _selectedMedias,
+          selectMedia: _selectMedia,
+          scrollController: _scrollController,
+        ),
       ),
-      floatingActionButton: _selectedMedias.isEmpty
-          ? null
-          : FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        EditorScreen(selectedMedias: _selectedMedias),
-                  ),
-                );
-              },
-              child: const Icon(Icons.check_rounded),
-            ),
     );
   }
 }
