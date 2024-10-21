@@ -31,7 +31,6 @@ class MediaItem extends StatelessWidget {
           Positioned.fill(
             child: Container(
               // Semi-transparent black overlay
-              color: Colors.black.withOpacity(0.15),
               child: media.assetEntity.type == AssetType.video
                   ? const Align(
                       alignment: Alignment.bottomRight,
@@ -59,9 +58,12 @@ class MediaItem extends StatelessWidget {
   Widget _buildMediaWidget() {
     return Positioned.fill(
       child: Padding(
-        padding: EdgeInsets.all(isSelected ? 10.0 : 0.0),
+        padding: EdgeInsets.all(isSelected ? 4.0 : 0.0),
         // Display the media widget
-        child: media.widget,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(4),
+          child: media.widget,
+        ),
       ),
     );
   }
@@ -70,16 +72,24 @@ class MediaItem extends StatelessWidget {
   Widget _buildIsSelectedOverlay() {
     return Positioned.fill(
       child: Container(
-        // Semi-transparent black overlay
-        color: Colors.black.withOpacity(0.1),
-        child: const Center(
-          child: Icon(
-            // Checkmark icon
-            Icons.check_circle_rounded,
-            // White color for the icon
-            color: Colors.white,
-            // Size of the icon
-            size: 30,
+        // // Semi-transparent black overlay
+        // color: Colors.black.withOpacity(0.1),
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Align(
+          alignment: Alignment.topLeft,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              // Checkmark icon
+              Icons.check_box,
+              // White color for the icon
+              color: Colors.white,
+              // Size of the icon
+              // size: 30,
+            ),
           ),
         ),
       ),
