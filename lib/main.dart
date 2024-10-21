@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:squarefit/ui/screens/home_screen.dart';
+import 'package:squarefit/ui/screens/picker_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +12,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: PickerScreen(
+          selectedMedias: []), // Set PickerScreen as the initial screen
     );
   }
 }
