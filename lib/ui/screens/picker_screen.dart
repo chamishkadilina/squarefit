@@ -4,6 +4,7 @@ import 'package:squarefit/models/media.dart';
 import 'package:squarefit/services/fetch_albums.dart';
 import 'package:squarefit/services/fetch_medias.dart';
 import 'package:squarefit/ui/components/medias_grid_view.dart';
+import 'package:squarefit/ui/screens/setting_drawer.dart';
 import 'package:squarefit/ui/screens/editor_screen.dart';
 
 class PickerScreen extends StatefulWidget {
@@ -91,6 +92,7 @@ class _PickerScreenState extends State<PickerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: SettingDrawer(),
       appBar: AppBar(
         title: DropdownButton<AssetPathEntity>(
           borderRadius: BorderRadius.circular(16.0),
