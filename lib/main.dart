@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: PickerScreen(
-          selectedMedias: []), // Set PickerScreen as the initial screen
+        selectedMedias: [],
+      ),
     );
   }
 }
