@@ -24,6 +24,7 @@ class _PickerScreenState extends State<PickerScreen> {
   int _lastPage = 0;
   int _currentPage = 0;
   final List<Media> _selectedMedias = [];
+  bool _isSelectAll = false; // State for Select All button
 
   @override
   void initState() {
@@ -89,12 +90,28 @@ class _PickerScreenState extends State<PickerScreen> {
     });
   }
 
+  // Method to handle Select All/Unselect All button
+  void _toggleSelectAll() {
+    setState(() {
+      _isSelectAll = !_isSelectAll; // Toggle the state
+
+      if (_isSelectAll) {
+        // Select all media
+        _selectedMedias.clear();
+        _selectedMedias.addAll(_medias);
+      } else {
+        // Deselect all media
+        _selectedMedias.clear();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: SettingDrawer(),
       appBar: AppBar(
-        // dropdown button
+        // Dropdown button for albums
         title: DropdownButton<AssetPathEntity>(
           borderRadius: BorderRadius.circular(16.0),
           value: _currentAlbum,
@@ -117,7 +134,7 @@ class _PickerScreenState extends State<PickerScreen> {
             _scrollController.jumpTo(0.0);
           },
         ),
-        // import button
+        // Import button
         actions: [ImportButton(selectedMedias: _selectedMedias)],
       ),
       body: Padding(
@@ -127,6 +144,38 @@ class _PickerScreenState extends State<PickerScreen> {
           selectedMedias: _selectedMedias,
           selectMedia: _selectMedia,
           scrollController: _scrollController,
+        ),
+      ),
+      floatingActionButton: GestureDetector(
+        onTap: _toggleSelectAll, // Call method to toggle Select All
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade600,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Transform.scale(
+                scale: 0.8,
+                child: Checkbox(
+                  value:
+                      _isSelectAll, // Checkbox state reflects if all are selected
+                  onChanged: (value) {
+                    _toggleSelectAll(); // Toggle selection when checkbox is clicked
+                  },
+                ),
+              ),
+              Text(
+                _isSelectAll
+                    ? 'Unselect All     '
+                    : 'Select All     ', // Update label
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
