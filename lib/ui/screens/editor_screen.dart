@@ -21,22 +21,43 @@ class EditorScreen extends StatefulWidget {
 
 class _EditorScreenState extends State<EditorScreen> {
   bool selectAll = false;
+
+  // Variable to hold the selected media, initialize it to the first media in the list
+  late Media selectedMedia;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initially show the first image in the preview area
+    selectedMedia = widget.selectedMedias[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: EditorAppBar(),
       body: Column(
         children: [
-          // square image(editing pre-view)
-          EditingPreviewArea(),
+          // Editing preview area
+          EditingPreviewArea(
+            selectedMedia:
+                selectedMedia, // Pass the selected media to preview area
+          ),
           // Tools options
           EditingToolOptions(),
-          // tools
+          // Editing tools
           EditingTools(),
-          // select all image text
+          // Select all image text
           SelectAllImages(selectAll: selectAll),
-          // image listView
-          ImageListRow(widget: widget),
+          // Image list view
+          ImageListRow(
+            widget: widget,
+            onImageTap: (Media media) {
+              setState(() {
+                selectedMedia = media; // Update the selected media when tapped
+              });
+            },
+          ),
         ],
       ),
     );
