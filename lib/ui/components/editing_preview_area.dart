@@ -11,15 +11,20 @@ class EditingPreviewArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      // Get the width of the screen and use it to set both height and width
+    // Get the original width and height of the image
+    final double width = selectedMedia.assetEntity.width.toDouble();
+    final double height = selectedMedia.assetEntity.height.toDouble();
+
+    return Container(
+      // Set a fixed width (screen width) and bounded height
       width: MediaQuery.of(context).size.width,
-      // Ensures the height is the same as the width
-      height: MediaQuery.of(context).size.width,
-      child: Container(
-        color: Colors.grey,
-        // Display the selected media's widget
-        child: selectedMedia.widget,
+      height: MediaQuery.of(context).size.width, // Make height equal to width
+      color: Colors.grey, // Optional background color
+      child: Center(
+        child: AspectRatio(
+          aspectRatio: width / height, // Maintain the original aspect ratio
+          child: selectedMedia.widget, // Display the image
+        ),
       ),
     );
   }
