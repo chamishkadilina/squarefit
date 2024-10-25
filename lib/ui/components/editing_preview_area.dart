@@ -1,3 +1,6 @@
+// Import for the ImageFilter class
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:squarefit/models/media.dart';
 
@@ -11,20 +14,52 @@ class EditingPreviewArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get the original width and height of the image
-    final double width = selectedMedia.assetEntity.width.toDouble();
-    final double height = selectedMedia.assetEntity.height.toDouble();
+    // Get the original width of the screen (to create a square container)
+    final double screenWidth = MediaQuery.of(context).size.width;
 
-    return Container(
-      // Set a fixed width (screen width) and bounded height
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.width, // Make height equal to width
-      color: Colors.grey, // Optional background color
-      child: Center(
-        child: AspectRatio(
-          aspectRatio: width / height, // Maintain the original aspect ratio
-          child: selectedMedia.widget, // Display the image
-        ),
+    return SizedBox(
+      width: screenWidth, // Set width to screen width
+      height: screenWidth, // Set height equal to width to make it a square
+      child: Stack(
+        children: [
+          // Background image with blur
+          ClipRRect(
+            child: Positioned.fill(
+              child: Stack(
+                children: [
+                  // Original background image
+                  Positioned.fill(
+                    child: FittedBox(
+                      fit: BoxFit
+                          .cover, // Fill the square while maintaining aspect ratio
+                      child: selectedMedia
+                          .widget, // Display the image as background
+                    ),
+                  ),
+                  // apply the blur effect
+                  BackdropFilter(
+                    filter: ImageFilter.blur(
+                        sigmaX: 5.0, sigmaY: 5.0), // Adjust blur intensity
+                    child: Container(
+                      color: Colors.black.withOpacity(0), // Transparent overlay
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Overlaying image maintaining aspect ratio
+          Center(
+            child: SizedBox(
+              width: screenWidth, // Square width
+              height: screenWidth, // Square height
+              child: FittedBox(
+                fit: BoxFit.contain, // Contain image within the square
+                child: selectedMedia.widget, // Display the original image
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
