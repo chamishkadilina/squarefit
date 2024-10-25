@@ -150,7 +150,7 @@ class _PickerScreenState extends State<PickerScreen> {
         onTap: _toggleSelectAll, // Call method to toggle Select All
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey.shade600,
+            color: Colors.grey,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Row(

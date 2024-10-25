@@ -39,11 +39,11 @@ class MediasGridView extends StatelessWidget {
         itemCount: medias.length,
         // 3 columns in the grid
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: 4,
           // Spacing between rows
-          mainAxisSpacing: 3,
+          mainAxisSpacing: 4,
           // Spacing between columns
-          crossAxisSpacing: 3,
+          crossAxisSpacing: 4,
         ),
         // Build each media item using the MediaItem widget
         itemBuilder: (context, index) => MediaItem(

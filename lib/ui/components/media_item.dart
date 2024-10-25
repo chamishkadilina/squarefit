@@ -4,14 +4,10 @@ import 'package:squarefit/models/media.dart';
 
 // Widget to display a media item with optional selection overlay
 class MediaItem extends StatelessWidget {
-  // The media to display
   final Media media;
-  // Indicates whether the media is selected
   final bool isSelected;
-  // Callback function when the media is tapped
   final Function selectMedia;
 
-  // Unique identifier for the widget, passes the key to the super constructor
   const MediaItem({
     required this.media,
     required this.isSelected,
@@ -48,7 +44,9 @@ class MediaItem extends StatelessWidget {
             ),
           ),
           // Display the selected overlay if the media is selected
-          if (isSelected) _buildIsSelectedOverlay(),
+          isSelected
+              ? _buildOverlay(Icons.check_circle)
+              : _buildOverlay(Icons.circle_outlined),
         ],
       ),
     );
@@ -58,37 +56,31 @@ class MediaItem extends StatelessWidget {
   Widget _buildMediaWidget() {
     return Positioned.fill(
       child: Padding(
-        padding: EdgeInsets.all(isSelected ? 4.0 : 0.0),
+        padding: EdgeInsets.all(isSelected ? 12.0 : 0.0),
         // Display the media widget
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(isSelected ? 12.0 : 0.0),
           child: media.widget,
         ),
       ),
     );
   }
 
-  // Build the selected overlay
-  Widget _buildIsSelectedOverlay() {
+  // Builds an overlay with an icon to indicate selected/unselected status
+  Widget _buildOverlay(IconData icon) {
     return Positioned.fill(
       child: Container(
-        // // Semi-transparent black overlay
-        // color: Colors.black.withOpacity(0.1),
+        // Semi-transparent black overlay
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(6),
+          color: Colors.black.withOpacity(0.1),
         ),
         child: Align(
           alignment: Alignment.topLeft,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(4.0),
             child: Icon(
-              // Checkmark icon
-              Icons.check_box,
-              // White color for the icon
+              icon,
               color: Colors.white,
-              // Size of the icon
-              // size: 30,
             ),
           ),
         ),
