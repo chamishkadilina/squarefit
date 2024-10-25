@@ -1,6 +1,4 @@
-// Import for the ImageFilter class
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:squarefit/models/media.dart';
 
@@ -24,28 +22,28 @@ class EditingPreviewArea extends StatelessWidget {
         children: [
           // Background image with blur
           ClipRRect(
-            child: Positioned.fill(
-              child: Stack(
-                children: [
-                  // Original background image
-                  Positioned.fill(
-                    child: FittedBox(
-                      fit: BoxFit
-                          .cover, // Fill the square while maintaining aspect ratio
-                      child: selectedMedia
-                          .widget, // Display the image as background
-                    ),
+            child: Stack(
+              children: [
+                // Original background image
+                Positioned.fill(
+                  child: FittedBox(
+                    fit: BoxFit
+                        .cover, // Fill the square while maintaining aspect ratio
+                    child:
+                        selectedMedia.widget, // Display the image as background
                   ),
-                  // apply the blur effect
-                  BackdropFilter(
+                ),
+                // Apply the blur effect
+                Positioned.fill(
+                  child: BackdropFilter(
                     filter: ImageFilter.blur(
                         sigmaX: 5.0, sigmaY: 5.0), // Adjust blur intensity
                     child: Container(
                       color: Colors.black.withOpacity(0), // Transparent overlay
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           // Overlaying image maintaining aspect ratio
