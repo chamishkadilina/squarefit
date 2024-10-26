@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:squarefit/models/media.dart';
 
 class EditingPreviewArea extends StatelessWidget {
+  final Media selectedMedia;
+  final double blurIntensity; // New parameter for blur intensity
+
   const EditingPreviewArea({
     super.key,
-    required this.selectedMedia, // Accept the selected media
+    required this.selectedMedia,
+    required this.blurIntensity, // Required parameter
   });
-
-  final Media selectedMedia; // Media is non-null since it's always initialized
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,9 @@ class EditingPreviewArea extends StatelessWidget {
                 Positioned.fill(
                   child: BackdropFilter(
                     filter: ImageFilter.blur(
-                        sigmaX: 5.0, sigmaY: 5.0), // Adjust blur intensity
+                        // Adjust blur intensity
+                        sigmaX: blurIntensity,
+                        sigmaY: blurIntensity),
                     child: Container(
                       color: Colors.black.withOpacity(0), // Transparent overlay
                     ),
@@ -49,8 +53,8 @@ class EditingPreviewArea extends StatelessWidget {
           // Overlaying image maintaining aspect ratio
           Center(
             child: SizedBox(
-              width: screenWidth, // Square width
-              height: screenWidth, // Square height
+              width: screenWidth,
+              height: screenWidth,
               child: FittedBox(
                 fit: BoxFit.contain, // Contain image within the square
                 child: selectedMedia.widget, // Display the original image
