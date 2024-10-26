@@ -23,6 +23,7 @@ class EditorScreen extends StatefulWidget {
 class _EditorScreenState extends State<EditorScreen> {
   bool selectAll = false;
   late Media selectedMedia;
+  double selectedBlurIntensity = 5.0; // Initial blur intensity
   final GlobalKey _previewContainerKey = GlobalKey();
 
   @override
@@ -44,9 +45,21 @@ class _EditorScreenState extends State<EditorScreen> {
         children: [
           RepaintBoundary(
             key: _previewContainerKey,
-            child: EditingPreviewArea(selectedMedia: selectedMedia),
+            child: EditingPreviewArea(
+              selectedMedia: selectedMedia,
+              // Pass the selected blur intensity
+              blurIntensity: selectedBlurIntensity,
+            ),
           ),
-          EditingToolOptions(),
+          EditingToolOptions(
+            selectedMedia: selectedMedia,
+            onBlurSelected: (double blurIntensity) {
+              setState(() {
+                // Update blur intensity
+                selectedBlurIntensity = blurIntensity;
+              });
+            },
+          ),
           EditingTools(),
           SelectAllImages(selectAll: selectAll),
           ImageListRow(
