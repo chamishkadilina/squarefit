@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:squarefit/ui/components/show_custom_snackbar.dart';
 
 Future<void> saveImage({
   required GlobalKey previewContainerKey,
@@ -13,13 +14,14 @@ Future<void> saveImage({
   String failureMessage = "Failed to save image",
   String permissionMessage = "Storage permission not granted",
 }) async {
+  // Ensure the widget is still in the widget tree
+  if (!context.mounted) return;
+
   try {
     // Request permission to access photos
     final permissionResult = await PhotoManager.requestPermissionExtend();
     if (!permissionResult.isAuth) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(permissionMessage)),
-      );
+      if (context.mounted) showCustomSnackBar(context, permissionMessage);
       return;
     }
 
@@ -32,25 +34,20 @@ Future<void> saveImage({
       final Uint8List pngBytes = byteData.buffer.asUint8List();
 
       // Save image to gallery
-      final asset =
-          await PhotoManager.editor.saveImage(pngBytes, filename: filename);
-      if (asset != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(successMessage)),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(failureMessage)),
+      await PhotoManager.editor.saveImage(pngBytes, filename: filename);
+      if (context.mounted) {
+        showCustomSnackBar(
+          context,
+          backgroundColor: Colors.green,
+          successMessage,
         );
       }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Image processing failed")),
-      );
+    } else if (context.mounted) {
+      showCustomSnackBar(context, 'Image processing failed');
     }
   } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("An error occurred: $e")),
-    );
+    if (context.mounted) {
+      showCustomSnackBar(context, 'An error occurred: $e');
+    }
   }
 }

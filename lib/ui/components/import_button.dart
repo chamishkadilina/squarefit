@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:squarefit/models/media.dart';
+import 'package:squarefit/ui/components/show_custom_snackbar.dart';
 import 'package:squarefit/ui/screens/editor_screen.dart';
 
 class ImportButton extends StatelessWidget {
@@ -24,11 +25,10 @@ class ImportButton extends StatelessWidget {
             ),
           );
         } else {
-          // Show a message or dialog if no media is selected
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Please select at least one image to proceed.'),
-            ),
+          // show no media is selected snakebar message
+          showCustomSnackBar(
+            context,
+            'Please select at least one image to proceed.',
           );
         }
       },
