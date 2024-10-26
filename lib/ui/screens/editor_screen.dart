@@ -6,7 +6,6 @@ import 'package:squarefit/ui/components/editing_tool_options.dart';
 import 'package:squarefit/ui/components/editing_tools.dart';
 import 'package:squarefit/ui/components/editor_app_bar.dart';
 import 'package:squarefit/ui/components/image_list_row.dart';
-import 'package:squarefit/ui/components/select_all_images.dart';
 
 class EditorScreen extends StatefulWidget {
   final List<Media> selectedMedias;
@@ -60,8 +59,9 @@ class _EditorScreenState extends State<EditorScreen> {
               });
             },
           ),
+          SizedBox(height: 16),
           EditingTools(),
-          SelectAllImages(selectAll: selectAll),
+          Spacer(),
           ImageListRow(
             widget: widget,
             onImageTap: (Media media) {
@@ -70,6 +70,7 @@ class _EditorScreenState extends State<EditorScreen> {
               });
             },
           ),
+          SizedBox(height: 16),
         ],
       ),
     );
