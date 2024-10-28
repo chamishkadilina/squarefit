@@ -59,9 +59,9 @@ class _EditorScreenState extends State<EditorScreen> {
               });
             },
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 8),
           EditingTools(),
-          Spacer(),
+          SizedBox(height: 8),
           ImageListRow(
             widget: widget,
             onImageTap: (Media media) {
@@ -70,7 +70,7 @@ class _EditorScreenState extends State<EditorScreen> {
               });
             },
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 8),
         ],
       ),
     );

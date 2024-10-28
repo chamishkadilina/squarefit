@@ -8,7 +8,7 @@ class EditingTools extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 32,
+      spacing: 32, runSpacing: 16,
       // Buttons
       children: [
         // blur
@@ -34,6 +34,12 @@ class EditingTools extends StatelessWidget {
           onTap: () {},
           icon: Icons.grid_4x4,
           text: 'Design',
+        ),
+        // crop
+        ToolButton(
+          onTap: () {},
+          icon: Icons.crop,
+          text: 'Crop',
         ),
         // filter
         ToolButton(
